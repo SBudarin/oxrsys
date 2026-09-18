@@ -76,6 +76,9 @@ As of March 17, 2026, the pinned non-interactive OpenXR-CTS baseline is green lo
   slot. Keep its C++ and Swift layouts synchronized.
 - The visionOS foveated-stream inverse warp must remain the exact inverse of the encoder
   `compress_axis` transform. Numerically revalidate fp32 round trips whenever either side changes.
+- The visionOS compositor loop must wait for a reusable GPU slot before acquiring a frame, use
+  bounded millisecond-scale waits, and complete every queried drawable's submission lifecycle even
+  when ARKit has not produced a device anchor yet.
 
 ## Streaming And Headset Contracts
 
