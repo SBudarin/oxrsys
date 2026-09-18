@@ -57,6 +57,8 @@ As of March 17, 2026, the pinned non-interactive OpenXR-CTS baseline is green lo
 - Metal streaming snapshots dynamic swapchain images on the application-provided command queue,
   uses GPU-side shared-event synchronization, and drops a streaming frame when no staging slot can
   be reused safely.
+- Metal swapchains accept `XR_SWAPCHAIN_USAGE_TRANSFER_DST_BIT`; applications such as Blender blit
+  their rendered view into the runtime-owned texture before releasing it.
 - Vulkan streaming snapshots released color images with application-dispatched Vulkan functions
   into bounded exportable images. Queue submission is non-blocking; fence waits belong to the
   encoder worker. Missing export support, exhausted slots, or wait failures drop the streaming frame

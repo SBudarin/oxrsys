@@ -56,6 +56,8 @@ This file tracks user-facing, integration-facing, and runtime-relevant changes f
 
 ### Fixed
 
+- Fixed Blender 5.1+ VR session startup on macOS by accepting Metal swapchains that declare
+  `XR_SWAPCHAIN_USAGE_TRANSFER_DST_BIT` for their final view blit.
 - Fixed a race in visionOS tracking setup where a session start superseded by a reconnect could still run its stale provider array against the new ARKit session, leaving a dead provider inside a live session — observed as hand tracking reporting "provider is not running" for an entire session while world and accessory tracking worked. Session starts now carry a generation that is re-checked after each suspension point.
 - Fixed the visionOS client getting stuck immersed after a connection was lost: a single state change notified several observers at once, so two concurrent `openImmersiveSpace`/`dismissImmersiveSpace` calls could overlap and leave the space open with nothing driving it, while the render loop kept submitting drawables against stopped ARKit providers at full frame rate. Presentation transitions are now serialized, and the render loop idles while nothing is streaming and skips frames that have no device anchor instead of presenting drawables the compositor discards.
 - Fixed the Apple streaming decoder never recovering when VideoToolbox invalidates the decompression session (`kVTInvalidSessionErr`/`-12903`), which the system does when the app loses its foreground or immersive privilege. Every later frame failed with the same status indefinitely while video kept arriving, leaving the headset on a frozen frame until the stream itself stopped; the decoder now rebuilds the session from the retained parameter sets, waits for a keyframe, and rate-limits the rebuild.
