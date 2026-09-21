@@ -290,6 +290,7 @@ private struct SettingsSheet: View {
                                 in: 60...150,
                                 step: 1
                             )
+                            .labelsHidden()
                         }
                     }
                 }
@@ -304,6 +305,7 @@ private struct SettingsSheet: View {
                                 .monospacedDigit()
                         }
                         Slider(value: $model.ipdOffset, in: -0.05...0.05, step: 0.001)
+                            .labelsHidden()
                         HStack {
                             Text("Convergent")
                             Spacer()
@@ -339,6 +341,9 @@ private struct SettingsSheet: View {
                     }
                 }
             }
+            #if os(macOS)
+            .formStyle(.grouped)
+            #endif
             .navigationTitle("Viewer Settings")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -352,7 +357,7 @@ private struct SettingsSheet: View {
             }
         }
         #if os(macOS)
-        .frame(minWidth: 420, minHeight: 360)
+        .frame(minWidth: 480, idealWidth: 520, minHeight: 480, idealHeight: 620)
         #endif
     }
 }
